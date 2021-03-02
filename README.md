@@ -21,3 +21,5 @@ WiFi AP SSID: clock_st
 WiFi AP PASS: 12345678
 
 [Веб-интерфейс](http://192.168.4.1)
+
+Библиотеки [Bootstrap](https://getbootstrap.com) и [Редактор дисплеев](https://cdn.jsdelivr.net/gh/ilyast91/clock_st@master/display_form/display_form.js) доступны через интернет. 
