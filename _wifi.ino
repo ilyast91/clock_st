@@ -58,5 +58,5 @@ void printWifiInfo(String ssid, String pass) {
 }
 
 IPAddress getWifiIP() {
-  return (wifiSettings.wifi_start_sta == "true" ? WiFi.localIP() : WiFi.softAPIP());
+  return (wifi_mode != "AP" ? WiFi.localIP() : WiFi.softAPIP());
 }
