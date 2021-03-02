@@ -229,7 +229,7 @@ void handle_settings_rtc_post() {
   if (action == "internet") {
     updateDateTimeFromInternet();
   }
-
+  setBaseIntensity();
   server.sendHeader("Location", String("/settings_rtc"), true);
   server.send(302, "text/plain", "");
 }
