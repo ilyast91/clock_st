@@ -46,7 +46,7 @@ void setup() {
   Serial.begin(9600);
   Serial.setDebugOutput(false);
   Serial.println("\nStarting");
-  pinMode(RESET_PIN, INPUT_PULLUP);
+  pinMode(RESET_PIN, INPUT);
   checkPressedOnStartSafeModeBtn();
   startFsSettings();
   startRTC();

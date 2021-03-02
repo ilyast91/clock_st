@@ -3,15 +3,13 @@
 */
 
 void checkPressedOnStartSafeModeBtn() {
-  if (digitalRead(RESET_PIN) == LOW) {
-    Serial.println("Start in safe mode");
+  if (digitalRead(RESET_PIN) == HIGH) {
     safeMode = true;
   }
 }
 
 void checkPressedSafeModeBtn() {
-  int btnState = digitalRead(RESET_PIN);
-  if (btnState == LOW) {
+  if (digitalRead(RESET_PIN) == HIGH) {
     printLedControlIp(getWifiIP());
     digitalWrite(RESET_PIN, HIGH);
   }
