@@ -4,6 +4,7 @@
 void startWebServer() {
   Serial.print("WebServer starting: ");
   server.on("/", HTTP_GET, handle_Root);  
+  
   server.on("/settings_led", HTTP_GET, handle_settings_led_get);
   server.on("/settings_led", HTTP_POST, handle_settings_led_post);
   server.on("/settings_rtc", HTTP_GET, handle_settings_rtc_get);
@@ -31,43 +32,38 @@ void handle_Root()
 {
   String handle_Root_response;
 
+  handle_Root_response += "<div class=\"row\">";
+  
   // card 1
+  handle_Root_response += "<div class=\"col-xl-4 col-lg-6 col-sm-12\">";
   handle_Root_response += "<div class=\"card m-3\"><div class=\"card-body\">";
   handle_Root_response += "<h5 class=\"card-title\">Часы</h5>";
   handle_Root_response += "<p class=\"card-text\">" + beautifulDateTime(rtc.GetDateTime()) + "</p>";
   handle_Root_response += "</div></div>";
+  handle_Root_response += "</div>";
 
   // card 2
+  handle_Root_response += "<div class=\"col-xl-4 col-lg-6 col-sm-12\">";
   handle_Root_response += "<div class=\"card m-3\"><div class=\"card-body\">";
   handle_Root_response += "<h5 class=\"card-title\">Температура (Dallas)</h5><p class=\"card-text\">";
   for (uint8_t i = 0; i < sensors.getDS18Count(); i++) {
     handle_Root_response += "Сенсор, индекс "  + (String) i + ": " + dallasReadTemp(i) + "</br>";
   }
   handle_Root_response += "</p></div></div>";
+  handle_Root_response += "</div>";
 
   // card 3
+  handle_Root_response += "<div class=\"col-xl-4 col-lg-6 col-sm-12\">";
   handle_Root_response += "<div class=\"card m-3\"><div class=\"card-body\">";
   handle_Root_response += "<h5 class=\"card-title\">BPM280</h5><p class=\"card-text\">";
   handle_Root_response += "Температура: " + (String) bmpReadTemperature() + "</br>";
   handle_Root_response += "Давление: " + (String) bmpReadPressure() + "</br>";
   handle_Root_response += "Высота: " + (String) bmpReadAltitude();
   handle_Root_response += "</p></div></div>";
-
+  handle_Root_response += "</div>";
+  
   // card 4
-  handle_Root_response += "<div class=\"card m-3\"><div class=\"card-body\">";
-  handle_Root_response += "<h5 class=\"card-title\">Список I2C устройств</h5><p class=\"card-text\">";
-  for (byte address = 8; address < 127; address++ ) {
-    Wire.beginTransmission(address);
-    byte error = Wire.endTransmission();
-    if (error == 0) {
-      handle_Root_response += "I2C устройство найдено по адресу: 0x" + String(address, HEX) + "</br>";
-    } else if (error == 4) {
-      handle_Root_response += "Необьяснимая ошибка устройства по адресу: 0x" + String(address, HEX) + "</br>";
-    }
-  }
-  handle_Root_response += "</p></div></div>";
-
-  // card 5
+  handle_Root_response += "<div class=\"col-xl-4 col-lg-6 col-sm-12\">";
   handle_Root_response += "<div class=\"card m-3\"><div class=\"card-body\">";
   handle_Root_response += "<h5 class=\"card-title\">Устройства LED</h5>";
   for (int device = 0; device < staticLedSettings.size(); device++) {
@@ -84,13 +80,57 @@ void handle_Root()
         }
         handle_Root_response += "</td></tr>";
       } else {
-        handle_Root_response += "<tr><td><strong>" + String(kv.key().c_str()) + "</td><td>" + kv.value().as<String>() + "</td></tr>";
+        handle_Root_response += "<tr><td><strong>" + String(kv.key().c_str()) + "</strong></td><td>" + kv.value().as<String>() + "</td></tr>";
       }
     }
     handle_Root_response += "</tbody></table></p>";
   }
   handle_Root_response += "</div></div>";
+  handle_Root_response += "</div>";
+  
+  // card 5
+  handle_Root_response += "<div class=\"col-xl-4 col-lg-6 col-sm-12\">";
+  handle_Root_response += "<div class=\"card m-3\"><div class=\"card-body\">";
+  handle_Root_response += "<h5 class=\"card-title\">Информация о плате</h5>";
+  handle_Root_response += "<p class=\"card-text\"><table class=\"table table-sm table-hover table-bordered\"><tbody>";  
+  handle_Root_response += "<tr><td><strong>Vcc</strong></td><td>"+String(ESP.getVcc())+"</td></tr>";
+  handle_Root_response += "<tr><td><strong>FreeHeap</strong></td><td>"+String(ESP.getFreeHeap())+"</td></tr>";  
+  handle_Root_response += "<tr><td><strong>ChipId</strong></td><td>"+String(ESP.getChipId())+"</td></tr>";
+  handle_Root_response += "<tr><td><strong>SdkVersion</strong></td><td>"+String(ESP.getSdkVersion())+"</td></tr>";
+  handle_Root_response += "<tr><td><strong>BootVersion</strong></td><td>"+String(ESP.getBootVersion())+"</td></tr>";
+  handle_Root_response += "<tr><td><strong>BootMode</strong></td><td>"+String(ESP.getBootMode())+"</td></tr>";
+  handle_Root_response += "<tr><td><strong>CpuFreqMHz</strong></td><td>"+String(ESP.getCpuFreqMHz())+"</td></tr>";
+  handle_Root_response += "<tr><td><strong>FlashChipId</strong></td><td>"+String(ESP.getFlashChipId())+"</td></tr>";
+  handle_Root_response += "<tr><td><strong>FlashChipRealSize</strong></td><td>"+String(ESP.getFlashChipRealSize())+"</td></tr>";
+  handle_Root_response += "<tr><td><strong>FlashChipSpeed</strong></td><td>"+String(ESP.getFlashChipSpeed())+"</td></tr>";
+  handle_Root_response += "<tr><td><strong>FlashChipMode</strong></td><td>"+String(ESP.getFlashChipMode())+"</td></tr>";
+  handle_Root_response += "<tr><td><strong>FlashChipSizeByChipId</strong></td><td>"+String(ESP.getFlashChipSizeByChipId())+"</td></tr>";
+  handle_Root_response += "<tr><td><strong>SketchSize</strong></td><td>"+String(ESP.getSketchSize())+"</td></tr>";
+  handle_Root_response += "<tr><td><strong>FreeSketchSpace</strong></td><td>"+String(ESP.getFreeSketchSpace())+"</td></tr>";
+  handle_Root_response += "<tr><td><strong>ResetInfo</strong></td><td>"+String(ESP.getResetInfo())+"</td></tr>";
+  handle_Root_response += "<tr><td><strong>CycleCount</strong></td><td>"+String(ESP.getCycleCount())+"</td></tr>";
+  handle_Root_response += "</tbody></table></p>";
+  handle_Root_response += "</div></div>";
+  handle_Root_response += "</div>";
 
+  // card 6
+  handle_Root_response += "<div class=\"col-xl-4 col-lg-6 col-sm-12\">";
+  handle_Root_response += "<div class=\"card m-3\"><div class=\"card-body\">";
+  handle_Root_response += "<h5 class=\"card-title\">Список I2C устройств</h5><p class=\"card-text\">";
+  for (byte address = 8; address < 127; address++ ) {
+    Wire.beginTransmission(address);
+    byte error = Wire.endTransmission();
+    if (error == 0) {
+      handle_Root_response += "I2C устройство найдено по адресу: 0x" + String(address, HEX) + "</br>";
+    } else if (error == 4) {
+      handle_Root_response += "Необьяснимая ошибка устройства по адресу: 0x" + String(address, HEX) + "</br>";
+    }
+  }
+  handle_Root_response += "</p></div></div>";
+  handle_Root_response += "</div>";
+  
+  handle_Root_response += "</div>";
+  
   sendHTML(200, handle_Root_response);
 }
 
@@ -122,7 +162,7 @@ void handle_settings_led_get() {
   
   settings_form += "<h5 class=\"mt-3\">Изменение отображения данных на дисплеях</h5>";  
   settings_form += "<div class=\"mb-3\">";
-  settings_form += "<textarea class=\"form-control\" id=\"led_devices\" rows=\"10\" name=\"led_devices\" style=\"display:none;\">" + ledSettings.led_devices + "</textarea>";
+  settings_form += "<textarea class=\"form-control\" id=\"led_devices\" rows=\"10\" name=\"led_devices\" style=\"display:none;\">" + staticLedSettings.as<String>() + "</textarea>";
   settings_form += "<div id=\"led_devices_form\"></div>";  
   settings_form += "</div>";
   settings_form += "<button type=\"submit\" class=\"btn btn-primary mx-1\">Изменить</button>";

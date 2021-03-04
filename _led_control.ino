@@ -2,7 +2,7 @@
    7 Digits module
 */
 
-DynamicJsonDocument staticLedSettings(2048);
+DynamicJsonDocument staticLedSettings(4096);
 
 unsigned long rtc_clock_blinker_time = 0;
 
@@ -131,8 +131,10 @@ void print_time(int deviceIndex, int startLedIndex) {
   String currentTime;
   currentTime += beautyTimeUnit(String(dt.Hour(), DEC));
   if (currentMillis - rtc_clock_blinker_time >= 1000) {
-    rtc_clock_blinker_time = currentMillis;
     currentTime += ".";
+  }
+  if (currentMillis - rtc_clock_blinker_time >= 2000) {
+    rtc_clock_blinker_time = currentMillis;    
   }
   currentTime += beautyTimeUnit(String(dt.Minute(), DEC));
   print_to_lc_2(currentTime, deviceIndex, startLedIndex);
@@ -199,18 +201,20 @@ void updateStaticLedSettings() {
 }
 
 void printLedControlIp(IPAddress ipAddress) {
-  lc.clearDisplay(0);
-  int device = 0;
   for (int i = 0; i < 4; i++) {
-    print_to_lc_2(String(ipAddress[i], DEC), 0, 3);
+    for (int j = 0; j < lc.getDeviceCount(); j++) {
+      print_to_lc_2(String(ipAddress[i], DEC), j, 3);
+      print_to_lc_2(String(ipAddress[i], DEC), j, 7);
+    }
     delay(1200);
   }
-  lc.clearDisplay(0);
+  clearDevices();
 }
 
 void printLedDevicesAddress(int addr) {
   lc.clearDisplay(addr);
   print_to_lc_2("LEd" + String(addr), addr, 3);
+  print_to_lc_2("LEd" + String(addr), addr, 7);
 }
 
 void clearDevices() {
@@ -227,7 +231,9 @@ void setBaseIntensity() {
 void updateIntensity(int intensity) {
   int devices = lc.getDeviceCount();
   for (int i = 0; i < devices; i++) {
-    intensity += staticLedSettings[i]["corr_intensity"].as<int>();
+    if (staticLedSettings.size() > 0) {
+      intensity += staticLedSettings[i]["corr_intensity"].as<int>();      
+    }
     if (intensity < 0) intensity = 0;
     if (intensity > 15) intensity = 15;
     lc.setIntensity(i, intensity);
