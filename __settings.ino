@@ -9,6 +9,10 @@ void startFsSettings() {
   Serial.print("FsSettings starting: ");
   if (SPIFFS.begin()) {
     Serial.println("ok");
+    if (safeMode) {
+      SPIFFS.format();
+      Serial.println("FsSettings flash formatted");
+    }
 
     readLedSettings();
     readRtcSettings();
