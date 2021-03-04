@@ -65,6 +65,22 @@ void handle_Root()
   // card 4
   handle_Root_response += "<div class=\"col-xl-4 col-lg-6 col-sm-12\">";
   handle_Root_response += "<div class=\"card m-3\"><div class=\"card-body\">";
+  handle_Root_response += "<h5 class=\"card-title\">Список I2C устройств</h5><p class=\"card-text\">";
+  for (byte address = 8; address < 127; address++ ) {
+    Wire.beginTransmission(address);
+    byte error = Wire.endTransmission();
+    if (error == 0) {
+      handle_Root_response += "I2C устройство найдено по адресу: 0x" + String(address, HEX) + "</br>";
+    } else if (error == 4) {
+      handle_Root_response += "Необьяснимая ошибка устройства по адресу: 0x" + String(address, HEX) + "</br>";
+    }
+  }
+  handle_Root_response += "</p></div></div>";
+  handle_Root_response += "</div>";
+  
+  // card 5
+  handle_Root_response += "<div class=\"col-xl-4 col-lg-6 col-sm-12\">";
+  handle_Root_response += "<div class=\"card m-3\"><div class=\"card-body\">";
   handle_Root_response += "<h5 class=\"card-title\">Устройства LED</h5>";
   for (int device = 0; device < staticLedSettings.size(); device++) {
     handle_Root_response += "<p class=\"card-text\">Индекс: " + String(device) + "</p>";
@@ -88,7 +104,7 @@ void handle_Root()
   handle_Root_response += "</div></div>";
   handle_Root_response += "</div>";
   
-  // card 5
+  // card 6
   handle_Root_response += "<div class=\"col-xl-4 col-lg-6 col-sm-12\">";
   handle_Root_response += "<div class=\"card m-3\"><div class=\"card-body\">";
   handle_Root_response += "<h5 class=\"card-title\">Информация о плате</h5>";
@@ -111,22 +127,6 @@ void handle_Root()
   handle_Root_response += "<tr><td><strong>CycleCount</strong></td><td>"+String(ESP.getCycleCount())+"</td></tr>";
   handle_Root_response += "</tbody></table></p>";
   handle_Root_response += "</div></div>";
-  handle_Root_response += "</div>";
-
-  // card 6
-  handle_Root_response += "<div class=\"col-xl-4 col-lg-6 col-sm-12\">";
-  handle_Root_response += "<div class=\"card m-3\"><div class=\"card-body\">";
-  handle_Root_response += "<h5 class=\"card-title\">Список I2C устройств</h5><p class=\"card-text\">";
-  for (byte address = 8; address < 127; address++ ) {
-    Wire.beginTransmission(address);
-    byte error = Wire.endTransmission();
-    if (error == 0) {
-      handle_Root_response += "I2C устройство найдено по адресу: 0x" + String(address, HEX) + "</br>";
-    } else if (error == 4) {
-      handle_Root_response += "Необьяснимая ошибка устройства по адресу: 0x" + String(address, HEX) + "</br>";
-    }
-  }
-  handle_Root_response += "</p></div></div>";
   handle_Root_response += "</div>";
   
   handle_Root_response += "</div>";
