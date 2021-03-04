@@ -33,11 +33,11 @@ void ledControlLooping() {
       int sensorInterval_left = staticLedSettings[device]["sources_left"][current_source_left]["interval"].as<int>();
 
       if (sensorInterval_left > 0) {
-        long update_time_left = staticLedSettings[device]["upd_left"].as<long>();
+        long update_time_left = staticLedSettings[device]["upd_left_time"].as<long>();
 
         if (update_time_left <= 0) {
           update_time_left = millis();
-          staticLedSettings[device]["upd_left"] = update_time_left;
+          staticLedSettings[device]["upd_left_time"] = update_time_left;
         }
 
         long passed_left = millis() - update_time_left;
@@ -46,7 +46,7 @@ void ledControlLooping() {
           if (current_source_left >= staticLedSettings[device]["sources_left"].size()) {
             current_source_left = 0;
           }
-          staticLedSettings[device]["upd_left"] = millis();
+          staticLedSettings[device]["upd_left_time"] = millis();
         }
       }
       staticLedSettings[device]["curr_src_left"] = current_source_left;
@@ -61,18 +61,18 @@ void ledControlLooping() {
       int sensorInterval_right = staticLedSettings[device]["sources_right"][current_source_right]["interval"].as<int>();
 
       if (sensorInterval_right > 0) {
-        long update_time_right = staticLedSettings[device]["upd_right"].as<long>();
+        long update_time_right = staticLedSettings[device]["upd_right_time"].as<long>();
 
         if (update_time_right <= 0) {
           update_time_right = millis();
-          staticLedSettings[device]["upd_right"] = update_time_right;
+          staticLedSettings[device]["upd_right_time"] = update_time_right;
         }
 
         long passed_right = millis() - update_time_right;
         if (passed_right >= sensorInterval_right * 1000) {
           current_source_right++;
           if (current_source_right >= staticLedSettings[device]["sources_right"].size()) current_source_right = 0;
-          staticLedSettings[device]["upd_right"] = millis();
+          staticLedSettings[device]["upd_right_time"] = millis();
         }
       }
       staticLedSettings[device]["curr_src_right"] = current_source_right;
