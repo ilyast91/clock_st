@@ -10,7 +10,6 @@ function updateForm() {
 			createDevice(led_devices[i], i);
 		}
 		document.getElementById('led_devices_form').append(generateButtonPanel('text-center', 'btn btn-success m-3', 'Добавить дисплей', 'onClickAddDisplay'));
-		console.log(JSON.parse(document.getElementById('led_devices').value))
 	}
 }
 
