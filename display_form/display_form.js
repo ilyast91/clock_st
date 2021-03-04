@@ -3,13 +3,15 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function updateForm() {
-    document.getElementById('led_devices_form').innerHTML = '';
-    var led_devices = JSON.parse(document.getElementById('led_devices').value) || [];
-    for(var i = 0; i < led_devices.length; i++) {
-        createDevice(led_devices[i], i);
-    }
-    document.getElementById('led_devices_form').append(generateButtonPanel('text-center', 'btn btn-success m-3', 'Добавить дисплей', 'onClickAddDisplay'));
-    console.log(JSON.parse(document.getElementById('led_devices').value))
+	if (document.getElementById('led_devices_form')) {
+		document.getElementById('led_devices_form').innerHTML = '';
+		var led_devices = JSON.parse(document.getElementById('led_devices').value) || [];
+		for(var i = 0; i < led_devices.length; i++) {
+			createDevice(led_devices[i], i);
+		}
+		document.getElementById('led_devices_form').append(generateButtonPanel('text-center', 'btn btn-success m-3', 'Добавить дисплей', 'onClickAddDisplay'));
+		console.log(JSON.parse(document.getElementById('led_devices').value))
+	}
 }
 
 function onClickAddDisplay() {
