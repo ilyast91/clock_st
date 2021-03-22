@@ -10,7 +10,7 @@ void sendHTML(int code, String title, String data) {
   String sendHTML_html;
   sendHTML_html += "<!doctype html><html lang=\"en\" class=\"h-100\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><title>Clock ST" + title + "</title>";
   sendHTML_html += "<link href=\"https://getbootstrap.com/docs/5.0/dist/css/bootstrap.min.css\" rel=\"stylesheet\"><meta name=\"theme-color\" content=\"#7952b3\">";
-  sendHTML_html += "<style>main > .container {padding: 60px 15px 0;} .footer {background-color: #f5f5f5;} .footer > .container{padding-right:15px;padding-left:15px;}</style>";
+  sendHTML_html += "<style>main > .container {padding: 60px 15px 0;} .footer {background-color: #0000FF;} .footer > .container{padding-right:15px;padding-left:15px;}</style>";
   sendHTML_html += "<body class=\"d-flex flex-column h-100\">";
   sendHTML_html += html_header_menu();
   sendHTML_html += "<main class=\"flex-shrink-0\"><div class=\"container mt-5\">";
@@ -28,10 +28,10 @@ String html_header_menu() {
   html_header_menu += "<a class=\"navbar-brand\" href=\"\\\">Clock ST</a>";
   html_header_menu += "<button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#navbarCollapse\" aria-controls=\"navbarCollapse\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">";
   html_header_menu += "<span class=\"navbar-toggler-icon\"></span></button><div class=\"collapse navbar-collapse\" id=\"navbarCollapse\"><ul class=\"navbar-nav me-auto mb-2 mb-md-0\">";
-  html_header_menu += "<li class=\"nav-item\"><a class=\"nav-link\" href=\"/settings_led\">LED</a></li>";
-  html_header_menu += "<li class=\"nav-item\"><a class=\"nav-link\" href=\"/settings_rtc\">Часы</a></li>";
-  html_header_menu += "<li class=\"nav-item\"><a class=\"nav-link\" href=\"/settings_sensors\">Сенсоры</a></li>";
   html_header_menu += "<li class=\"nav-item\"><a class=\"nav-link\" href=\"/settings_wifi\">WIFI</a></li>";
+  html_header_menu += "<li class=\"nav-item\"><a class=\"nav-link\" href=\"/settings_rtc\">Часы</a></li>";
+  html_header_menu += "<li class=\"nav-item\"><a class=\"nav-link\" href=\"/settings_led\">LED</a></li>";
+  html_header_menu += "<li class=\"nav-item\"><a class=\"nav-link\" href=\"/settings_sensors\">Сенсоры</a></li>";
   html_header_menu += "</ul>";
   html_header_menu += "<form class=\"d-flex\"><a class=\"btn btn-outline-danger\" href=\"\\restart\">Перезагрузка</a></form>";
   html_header_menu += "</div></div></nav></header>";

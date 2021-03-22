@@ -47,7 +47,7 @@ void handle_Root()
   handle_Root_response += "<div class=\"card m-3\"><div class=\"card-body\">";
   handle_Root_response += "<h5 class=\"card-title\">Температура (Dallas)</h5><p class=\"card-text\">";
   for (uint8_t i = 0; i < sensors.getDS18Count(); i++) {
-    handle_Root_response += "Сенсор, индекс "  + (String) i + ": " + dallasReadTemp(i) + "</br>";
+    handle_Root_response += "Сенсор, индекс "  + (String) i + ": " + dallasReadTemp(i) + " °C" "</br>";
   }
   handle_Root_response += "</p></div></div>";
   handle_Root_response += "</div>";
@@ -56,9 +56,9 @@ void handle_Root()
   handle_Root_response += "<div class=\"col-xl-4 col-lg-6 col-sm-12\">";
   handle_Root_response += "<div class=\"card m-3\"><div class=\"card-body\">";
   handle_Root_response += "<h5 class=\"card-title\">BPM280</h5><p class=\"card-text\">";
-  handle_Root_response += "Температура: " + (String) bmpReadTemperature() + "</br>";
-  handle_Root_response += "Давление: " + (String) bmpReadPressure() + "</br>";
-  handle_Root_response += "Высота: " + (String) bmpReadAltitude();
+  handle_Root_response += "Температура: " + (String) bmpReadTemperature() + " °C" "</br>";
+  handle_Root_response += "Давление: " + (String) bmpReadPressure() + " мм.рт.ст" "</br>";
+  handle_Root_response += "Высота: " + (String) bmpReadAltitude()+ " м";
   handle_Root_response += "</p></div></div>";
   handle_Root_response += "</div>";
   
