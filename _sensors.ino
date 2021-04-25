@@ -19,13 +19,8 @@ void startSensors() {
   float altitude = sensorsSettings.bmp_local_altitude.toFloat();
   if (altitude > 0) bpmLocalAltitude = altitude;  
   bmp280.begin(0x76);
-  /* Default settings from datasheet. */
-  bmp280.setSampling(Adafruit_BMP280::MODE_NORMAL,     /* Operating Mode. */
-                     Adafruit_BMP280::SAMPLING_X2,     /* Temp. oversampling */
-                     Adafruit_BMP280::SAMPLING_X16,    /* Pressure oversampling */
-                     Adafruit_BMP280::FILTER_X16,      /* Filtering. */
-                     Adafruit_BMP280::STANDBY_MS_500); /* Standby time. */
 
+  aht10.begin();
   Serial.println("ok");
 }
 
@@ -43,6 +38,10 @@ float bmpReadAltitude() {
   return bmp280.readAltitude(bpmLocalAltitude);
 }
 
+float bmpReadHumidity() {
+  return bmp280.readHumidity();
+}
+
 float dallasReadTemp(int index) {
   if (dallasUpdateTime == 0) dallasUpdateTime = millis();
   if (millis() - dallasUpdateTime > dallasUpdateInterval) {
@@ -53,4 +52,16 @@ float dallasReadTemp(int index) {
     dallasUpdateTime = millis();
   }
   return dallasTempStore[index];
+}
+
+float aht10readTemp() {
+  sensors_event_t humidity, temp;
+  aht10.getEvent(&humidity, &temp);
+  return temp.temperature;
+}
+
+float aht10readHumidity() {
+  sensors_event_t humidity, temp;
+  aht10.getEvent(&humidity, &temp);
+  return humidity.relative_humidity;
 }

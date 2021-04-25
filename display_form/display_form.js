@@ -124,7 +124,7 @@ function createDevice(device, index) {
 }
 
 function generateSourceSelect(name, value, onChange) {
-    var sources = ['time', 'date', 'year', 'bmp_temp', 'bmp_pressure', 'bmp_altitude'];
+    var sources = ['time', 'date', 'year', 'bmp_temp', 'bmp_pressure', 'bmp_altitude', 'bmp_humidity', 'aht10_temp', 'aht10_humidity'];
     for(var i=0;i<8;i++) sources.push('temp_'+i);
 
     var select = createElement('select', 'form-select json_source');
