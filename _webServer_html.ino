@@ -18,7 +18,7 @@ void sendHTML(int code, String title, String data) {
   sendHTML_html += "</div></main>";
   sendHTML_html += "<footer class=\"footer mt-auto py-3 bg-light\"><div class=\"container\"><span class=\"text-muted\">Создано <a href=\"mailto:ilyast91@gmail.com\">ilyast91@gmail.com</a></span></div></footer>";
   sendHTML_html += "<script src=\"https://getbootstrap.com/docs/5.0/dist/js/bootstrap.bundle.min.js\"></script>";
-  sendHTML_html += "<script src=\"https://cdn.jsdelivr.net/gh/ilyast91/clock_st@master/display_form/display_form.js\"></script>";
+  sendHTML_html += "<script src=\"https://cdn.jsdelivr.net/gh/ilyast91/clock_st@latest/display_form/display_form.js\"></script>";
   sendHTML_html += "</body></html>";
   server.send(code, "text/html", sendHTML_html);
 }

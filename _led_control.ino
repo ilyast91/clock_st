@@ -115,7 +115,11 @@ void switch_print(String sensor, int deviceIndex, int startLedIndex) {
   if (sensor == "bmp_temp") print_bmp_temp(deviceIndex, startLedIndex);
   if (sensor == "bmp_pressure") print_bmp_pressure(deviceIndex, startLedIndex);
   if (sensor == "bmp_altitude") print_bmp_altitude(deviceIndex, startLedIndex);
-  if (sensor == "bmp_humidity") print_bmp_humidity(deviceIndex, startLedIndex);
+  
+  if (sensor == "bme_temp") print_bme_temp(deviceIndex, startLedIndex);
+  if (sensor == "bme_pressure") print_bme_pressure(deviceIndex, startLedIndex);
+  if (sensor == "bme_altitude") print_bme_altitude(deviceIndex, startLedIndex);
+  if (sensor == "bme_humidity") print_bme_humidity(deviceIndex, startLedIndex);
 
   if (sensor == "aht10_temp") print_aht10_temp(deviceIndex, startLedIndex);
   if (sensor == "aht10_humidity") print_aht10_humidity(deviceIndex, startLedIndex);
@@ -174,8 +178,20 @@ void print_bmp_altitude(int deviceIndex, int startLedIndex) {
   print_to_lc_2(String(bmpReadAltitude(), 0), deviceIndex, startLedIndex);
 }
 
-void print_bmp_humidity(int deviceIndex, int startLedIndex) {
-  print_to_lc_2(String(bmpReadHumidity(), 0), deviceIndex, startLedIndex);
+void print_bme_temp(int deviceIndex, int startLedIndex) {
+  print_to_lc_2(String(bmeReadTemperature(), 1), deviceIndex, startLedIndex);
+}
+
+void print_bme_pressure(int deviceIndex, int startLedIndex) {
+  print_to_lc_2(String(bmeReadPressure(), 0), deviceIndex, startLedIndex);
+}
+
+void print_bme_altitude(int deviceIndex, int startLedIndex) {
+  print_to_lc_2(String(bmeReadAltitude(), 0), deviceIndex, startLedIndex);
+}
+
+void print_bme_humidity(int deviceIndex, int startLedIndex) {
+  print_to_lc_2(String(bmeReadHumidity(), 0), deviceIndex, startLedIndex);
 }
 
 void print_aht10_temp(int deviceIndex, int startLedIndex) {

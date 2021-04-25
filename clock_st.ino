@@ -13,7 +13,8 @@
 #include <NTPClient.h>              // NTPClient
 #include <ESP8266WebServer.h>
 #include <LedControl.h>             // LedControl    
-#include <Adafruit_BME280.h>        // Adafruit            
+#include <Adafruit_BME280.h>        // Adafruit    
+#include <Adafruit_BMP280.h>                
 #include <Adafruit_AHTX0.h>
 
 /*
@@ -36,7 +37,8 @@ WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP);
 ESP8266WebServer server(WEB_SERVER_PORT);
 LedControl lc = LedControl(LED_CTL_DATA_PIN, LED_CTL_CLK_PIN, LED_CTL_CS_PIN, 8);
-Adafruit_BME280 bmp280;
+Adafruit_BME280 bme280;
+Adafruit_BMP280 bmp280;
 Adafruit_AHTX0 aht10;
 
 bool safeMode = false;

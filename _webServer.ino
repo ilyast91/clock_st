@@ -55,16 +55,6 @@ void handle_Root()
   // card 3
   handle_Root_response += "<div class=\"col-xl-4 col-lg-6 col-sm-12\">";
   handle_Root_response += "<div class=\"card m-3\"><div class=\"card-body\">";
-  handle_Root_response += "<h5 class=\"card-title\">BPM280</h5><p class=\"card-text\">";
-  handle_Root_response += "Температура: " + (String) bmpReadTemperature() + " °C" "</br>";
-  handle_Root_response += "Давление: " + (String) bmpReadPressure() + " мм.рт.ст" "</br>";
-  handle_Root_response += "Высота: " + (String) bmpReadAltitude()+ " м";
-  handle_Root_response += "</p></div></div>";
-  handle_Root_response += "</div>";
-  
-  // card 4
-  handle_Root_response += "<div class=\"col-xl-4 col-lg-6 col-sm-12\">";
-  handle_Root_response += "<div class=\"card m-3\"><div class=\"card-body\">";
   handle_Root_response += "<h5 class=\"card-title\">Список I2C устройств</h5><p class=\"card-text\">";
   for (byte address = 8; address < 127; address++ ) {
     Wire.beginTransmission(address);
@@ -75,6 +65,32 @@ void handle_Root()
       handle_Root_response += "Необьяснимая ошибка устройства по адресу: 0x" + String(address, HEX) + "</br>";
     }
   }
+  handle_Root_response += "</p></div></div>";
+  handle_Root_response += "</div>";
+  
+  // card 4
+  handle_Root_response += "<div class=\"col-xl-4 col-lg-6 col-sm-12\">";
+  handle_Root_response += "<div class=\"card m-3\"><div class=\"card-body\">";
+  handle_Root_response += "<h5 class=\"card-title\">Sensors</h5><p class=\"card-text\">";
+  
+  handle_Root_response += "<b>BMP280:</b></br>";
+  handle_Root_response += "Температура: " + (String) bmpReadTemperature() + " °C" + "</br>";
+  handle_Root_response += "Давление: " + (String) bmpReadPressure() + " мм.рт.ст" + "</br>";
+  handle_Root_response += "Высота: " + (String) bmpReadAltitude()+ " м" + "</br>";
+  handle_Root_response += "</br>";
+  
+  handle_Root_response += "<b>BME280:</b></br>";
+  handle_Root_response += "Температура: " + (String) bmeReadTemperature() + " °C" + "</br>";
+  handle_Root_response += "Давление: " + (String) bmeReadPressure() + " мм.рт.ст" + "</br>";
+  handle_Root_response += "Высота: " + (String) bmeReadAltitude()+ " м" + "</br>";
+  handle_Root_response += "Влажность: " + (String) bmeReadHumidity()+ " %" + "</br>";
+  handle_Root_response += "</br>";
+  
+  handle_Root_response += "<b>AHT10:</b></br>";
+  handle_Root_response += "Температура: " + (String) aht10readTemp() + " °C" + "</br>";
+  handle_Root_response += "Влажность: " + (String) aht10readHumidity()+ " %" + "</br>";
+  handle_Root_response += "</br>";
+  
   handle_Root_response += "</p></div></div>";
   handle_Root_response += "</div>";
   
